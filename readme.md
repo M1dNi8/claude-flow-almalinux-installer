@@ -265,7 +265,7 @@ For installation issues:
 **Ready to revolutionize your AI development workflow? 🚀**
 
 ```bash
-curl -O https://raw.githubusercontent.com/your-repo/install.sh
+curl -O https://github.com/M1dNi8/claude-flow-almalinux-installer/blob/main/install.sh
 chmod +x install.sh
 sudo ./install.sh
 ```
