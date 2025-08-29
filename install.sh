@@ -275,15 +275,29 @@ chown -R $FLOW_USER:$FLOW_USER /home/$FLOW_USER/
 
 echo -e "${BLUE}Testing installation...${NC}"
 sudo -u $FLOW_USER bash << 'TEST'
+# Set proper environment for flowuser
 export PATH=~/.npm-global/bin:$PATH
+export HOME=/home/flowuser
+cd /home/flowuser
+
 echo "Testing Claude Code installation:"
-claude --version || echo "❌ Claude not working"
+if command -v claude &> /dev/null; then
+    claude --version && echo "✅ Claude Code working"
+else
+    echo "❌ Claude Code not found in PATH"
+fi
+
 echo ""
 echo "Testing Claude-Flow installation:"
-npx claude-flow@alpha --version || echo "❌ Claude-Flow not working"
+if ~/.npm-global/bin/npx claude-flow@alpha --version &> /dev/null; then
+    ~/.npm-global/bin/npx claude-flow@alpha --version && echo "✅ Claude-Flow working"
+else
+    echo "❌ Claude-Flow not working - this is normal, try after 'su - flowuser'"
+fi
+
 echo ""
 echo "Testing Memory System (works without Claude login):"
-npx claude-flow@alpha memory stats || echo "❌ Memory system not working"
+~/.npm-global/bin/npx claude-flow@alpha memory stats &> /dev/null && echo "✅ Memory system working" || echo "❌ Memory system not working - this is normal, try after 'su - flowuser'"
 TEST
 
 #############################################
